@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info Lookup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+
+        #loading {
+            display: none;
+            color: blue;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>User Info Lookup</h2>
+
+    <label for="nicknameInput">Enter Nickname:</label>
+    <input type="text" id="nicknameInput">
+    <button onclick="getUserInfo()">Get User Info</button>
+
+    <div id="loading">Loading...</div>
+    <div id="result"></div>
+
+    <script>
+        async function getUserInfo() {
+            const nickname = document.getElementById('nicknameInput').value;
+            const resultDiv = document.getElementById('result');
+            const loadingDiv = document.getElementById('loading');
+
+            // Show loading message
+            loadingDiv.style.display = 'block';
+            resultDiv.innerHTML = '';
+
+            const url = 'http://localhost:3000/getUserInfo';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ nickname: nickname }),
+                });
+
+                const data = await response.json();
+
+                if (data.rcode === 1) {
+                    displayUserInfo(data.data);
+                } else {
+                    displayError(data.rdesc);
+                }
+            } catch (error) {
+                displayError('Error fetching user information.');
+            } finally {
+                // Hide loading message
+                loadingDiv.style.display = 'none';
+            }
+        }
+
+        function displayUserInfo(userInfo) {
+            const resultDiv = document.getElementById('result');
+            const table = document.createElement('table');
+
+            // Add table data
+            for (const key in userInfo) {
+                const row = table.insertRow();
+                
+                const nameCell = row.insertCell(0);
+                nameCell.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Capitalize first letter
+
+                const valueCell = row.insertCell(1);
+                valueCell.textContent = userInfo[key];
+            }
+
+            // Append the table to the result div
+            resultDiv.appendChild(table);
+        }
+
+        function displayError(errorMessage) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p style="color: red;">${errorMessage}</p>`;
+        }
+    </script>
+
+</body>
+</html>
