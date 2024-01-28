@@ -10,9 +10,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Serve static files from the root directory
-app.use(express.static(path.join(__dirname, '/')));
+app.use(express.static(path.join(__dirname+'/public', '/')));
 
-app.post('/getUserInfo', async (req, res) => {
+app.post('/api/getUserInfo', async (req, res) => {
     let op;
     let paramName;
     let input = req.body.nickname; // Assuming the input is provided in the "nickname" field
