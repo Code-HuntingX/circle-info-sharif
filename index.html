@@ -1,52 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Info Lookup</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        #result {
-            margin-top: 20px;
-        }
-
-        #loading {
-            display: none;
-            color: blue;
-            margin-top: 10px;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" /> -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body>
 
-    <h2>User Info Lookup</h2>
+<body class="container mx-auto ">
 
-    <label for="nicknameInput">Enter Nickname:</label>
+    <!-- ---------search section----------- -->
+    <section class="mt-10 flex justify-center">
+        <div class="container">
+            <div class="input-container">
+                <input id="nicknameInput" type="text" autocomplete="off" placeholder="Nickname or Mobile Number"
+                    class="input text-black input-bordered input-primary w-full" />
+                    <div class="reset-icon" onclick="resetInput()">
+                            <i class='bx bx-reset '></i>
+                    </div>
+            </div>
+
+            <div class="mt-4">
+                <button class="bg-blue-800 hover:bg-red-500 text-white py-2 px-4 rounded-2xl" onclick="getUserInfo()">Get User
+                    Info</button>
+            </div>
+
+            <div id="loading">
+                <span class="loading loading-spinner text-primary"></span>
+                <span class="loading loading-spinner text-secondary"></span>
+                <span class="loading loading-spinner text-accent"></span>
+                <span class="loading loading-spinner text-neutral"></span>
+                <span class="loading loading-spinner text-info"></span>
+                <span class="loading loading-spinner text-success"></span>
+                <span class="loading loading-spinner text-warning"></span>
+                <span class="loading loading-spinner text-error"></span>
+            </div>
+            <div id="result"></div>
+        </div>
+        </div>
+
+    </section>
+
+
+    <!-- <label for="nicknameInput">Enter Nickname:</label>
     <input type="text" id="nicknameInput">
     <button onclick="getUserInfo()">Get User Info</button>
 
     <div id="loading">Loading...</div>
-    <div id="result"></div>
+    <div id="result"></div> -->
+    <script>function resetInput() {
+            document.getElementById('nicknameInput').value = '';
+        }
+    </script>
 
     <script>
         async function getUserInfo() {
@@ -91,7 +101,7 @@
             // Add table data
             for (const key in userInfo) {
                 const row = table.insertRow();
-                
+
                 const nameCell = row.insertCell(0);
                 nameCell.textContent = key.charAt(0).toUpperCase() + key.slice(1); // Capitalize first letter
 
@@ -110,4 +120,5 @@
     </script>
 
 </body>
+
 </html>

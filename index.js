@@ -13,8 +13,27 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 
 app.post('/getUserInfo', async (req, res) => {
-    const nickname = req.body.nickname;
-    console.log(`Received request for nickname: ${nickname}`);
+    let op;
+    let paramName;
+    let input = req.body.nickname; // Assuming the input is provided in the "nickname" field
+
+    // Determine whether the input is a nickname or a mobile number
+    if (isNaN(input)) {
+        // If the input is not a number, treat it as a nickname
+        op = 'getUserInfobyNickname';
+        paramName = 'nickname';
+    } else {
+        // If the input is a number, treat it as a mobile number
+        op = 'getUserInfo';
+        paramName = 'msisdn';
+
+        // Add country code '88' if it's missing
+        if (!input.startsWith('88')) {
+            input = `88${input}`;
+        }
+    }
+
+    console.log(`Received request for ${op}: ${input}`);
 
     const url = 'http://circle.robi.com.bd/mylife/appapi/appcall.php';
     const headers = {
@@ -24,7 +43,7 @@ app.post('/getUserInfo', async (req, res) => {
     };
 
     try {
-        const response = await axios.get(`${url}?op=getUserInfobyNickname&nickname=${nickname}`, { headers });
+        const response = await axios.get(`${url}?op=${op}&${paramName}=${input}`, { headers });
         console.log(`Response from external API: ${JSON.stringify(response.data)}`);
         res.json(response.data);
     } catch (error) {
