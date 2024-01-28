@@ -10,6 +10,103 @@
     <link rel="stylesheet" href="styles.css">
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" /> -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin: auto;
+    color: white;
+    justify-content: center;
+    border-radius: 10px;
+    border: none;
+    background-color: #45a0a0;
+}
+.container {
+    width: 400px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container */
+    text-align: center;
+    z-index: 0;
+}
+
+th,
+td {
+    border: 1px solid white;
+    padding: 8px;
+    text-align: center;
+    border-radius: 18px;
+}
+
+th {
+    background-color: #2e00fb;
+    border: none;
+}
+
+th:nth-child(1),
+td:nth-child(1),
+th:nth-child(2),
+td:nth-child(2) {
+    width: 60%;
+    /* Adjust the width as needed */
+}
+
+#result {
+    margin-top: 20px;
+    border: none;
+}
+
+#loading {
+    display: none;
+    color: blue;
+    margin-top: 10px;
+}
+
+    .input-container {
+        margin: 0 auto;
+        position: relative;
+        width: 30%;
+    }
+    
+    .reset-icon {
+        position: absolute;
+        right: 8%;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+    }
+    
+    .reset-icon i {
+        color: #780b0b; /* Adjust the color as needed */
+    }
+    #nicknameInput{
+    
+        display: block;
+    }
+
+
+    @media (max-width: 640px) {
+        table {
+            width: 95%;
+        }
+
+        .reset-icon {
+            
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .input-container{
+            width: 80%;
+        }
+    }
+    </style>
 </head>
 
 <body class="container mx-auto ">
@@ -68,7 +165,7 @@
             loadingDiv.style.display = 'block';
             resultDiv.innerHTML = '';
 
-            const url = 'http://localhost:3000/api/getUserInfo';
+            const url = 'https://circle-info-sharif.vercel.app/api/getUserInfo';
 
             try {
                 const response = await fetch(url, {
