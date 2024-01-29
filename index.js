@@ -35,7 +35,7 @@ app.post('/api/getUserInfo', async (req, res) => {
 
     console.log(`Received request for ${op}: ${input}`);
 
-    const url = 'http://circle.robi.com.bd/mylife/appapi/appcall.php';
+    const url = 'https://circle.robi.com.bd/mylife/appapi/appcall.php';
     const headers = {
         'x-app-key': '000oc0so48owkw4s0wwo4c00g00804w80gwkw8kg',
         'x-api-key': 'a11b9ce756f437308e449831e18aa7cb',
